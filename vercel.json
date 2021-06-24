@@ -1,25 +1,33 @@
 {
-    "name": "common-server",
-    "public": true,
-    "version": 2,
-    "env": {
-        "KEY": "@ss-key",
-        "METHOD": "@ss-method",
-        "PLATOM": "NOW"
-    },
-    "github": {
-        "enabled": true
-    },
-    "builds": [
-        {
-            "src": "app.js",
-            "use": "@vercel/node"
+  "name": "common-server",
+  "public": true,
+  "version": 2,
+  "env": {
+    "KEY": "@ss-key",
+    "METHOD": "@ss-method",
+    "PLATOM": "NOW"
+  },
+  "github": {
+    "enabled": true
+  },
+  "builds": [
+    {
+      "src": "**/*.js",
+      "use": "@vercel/node",
+      "config": {
+        "functions": {
+          "**/*.js": {
+            "memory": 3008,
+            "maxDuration": 30
+          }
         }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "app.js"
-        }
-    ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.js"
+    }
+  ]
 }

@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const chrome = require("chrome-aws-lambda");
 let page = null;
 // 禁用缓存
 // page.setCacheEnabled(false)
@@ -24,15 +25,19 @@ let cookies = [
   "sessionid_ss=aa32353c06cb9c275db408a3a9331cc0",
   "passport_auth_status=4e514f67dbe53386429f444a468c539d%2C",
 ];
-cookies = cookies
-  .filter((item) => item.includes("="))
-  .map((cookie) => {
-    let [name, value] = cookie.split("=");
-    return { name, value };
-  });
 
-const init = async () => {
-  const browser = await puppeteer.launch({});
+const getVideoList = async () => {
+  cookies = cookies
+    .filter((item) => item.includes("="))
+    .map((cookie) => {
+      let [name, value] = cookie.split("=");
+      return { name, value };
+    });
+  const browser = await puppeteer.launch({
+    args: chrome.args,
+    executablePath: await chrome.executablePath,
+    headless: chrome.headless,
+  });
   page = await browser.newPage();
   await page.goto("https://www.douyin.com/");
   await page.setCookie(...cookies);
@@ -45,10 +50,6 @@ const init = async () => {
       interceptedRequest.abort();
     else interceptedRequest.continue();
   });
-};
-
-const getVideoList = async () => {
-  await init();
   return new Promise(async (resolve, reject) => {
     await page.reload();
     page.on("response", async function fun(response) {
