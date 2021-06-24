@@ -36,7 +36,7 @@ const init = async () => {
   const browser = await puppeteer.launch({
     args: chrome.args,
     executablePath: await chrome.executablePath,
-    headless: chrome.headless
+    headless: chrome.headless,
   });
   page = await browser.newPage();
   await page.goto("https://www.douyin.com/");
@@ -53,6 +53,7 @@ const init = async () => {
 };
 
 const getVideoList = async () => {
+  await init();
   return new Promise(async (resolve, reject) => {
     await page.reload();
     page.on("response", async function fun(response) {
@@ -63,8 +64,6 @@ const getVideoList = async () => {
     });
   });
 };
-
-init();
 
 exports = module.exports = async (ctx, next) => {
   console.log("douyinCtl");
