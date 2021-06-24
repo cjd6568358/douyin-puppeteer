@@ -1,8 +1,5 @@
 const puppeteer = require("puppeteer-core");
 const chrome = require("chrome-aws-lambda");
-let page = null;
-// 禁用缓存
-// page.setCacheEnabled(false)
 
 let cookies = [
   "ttwid=1%7Cwk9ImDsCBtJgmZ6S2gv3FYCSpjmZ1dsJFMlXLNg-…cc54de4db8dee7ab9b1a81c950ed2afebb22b0847e2c761e1",
@@ -26,39 +23,39 @@ let cookies = [
   "passport_auth_status=4e514f67dbe53386429f444a468c539d%2C",
 ];
 
-const getVideoList = async () => {
-  cookies = cookies
-    .filter((item) => item.includes("="))
-    .map((cookie) => {
-      let [name, value] = cookie.split("=");
-      return { name, value };
-    });
-  const browser = await puppeteer.launch({
+async function getOptions() {
+  const options = {
     args: chrome.args,
     executablePath: await chrome.executablePath,
     headless: chrome.headless,
-  });
-  page = await browser.newPage();
-  await page.goto("https://www.douyin.com/");
-  await page.setCookie(...cookies);
-  await page.setRequestInterception(true);
-  page.on("request", (interceptedRequest) => {
-    if (
-      interceptedRequest.url().endsWith(".png") ||
-      interceptedRequest.url().endsWith(".jpg")
-    )
-      interceptedRequest.abort();
-    else interceptedRequest.continue();
-  });
-  return new Promise(async (resolve, reject) => {
-    await page.reload();
-    page.on("response", async function fun(response) {
-      if (response.url().includes("/v1/web/channel/feed/")) {
-        resolve(await response.json());
-        page.off("response", fun);
-      }
-    });
-  });
+  };
+  return options;
+}
+
+async function getPage() {
+  const options = await getOptions();
+  const browser = await puppeteer.launch(options);
+  const page = await browser.newPage();
+  return page;
+}
+
+async function getScreenshot(url) {
+  const page = await getPage();
+  await page.setViewport({ width: 2048, height: 1170 });
+  await page.goto(url);
+  const file = await page.screenshot({ type: "png" });
+  return file;
+}
+
+module.exports = async (req, res) => {
+  const buffer = await getScreenshot("https://vercel.com/about");
+  if (buffer.length > 0) {
+    ctx.body = 1;
+    await next();
+  } else {
+    ctx.body = 3;
+    await next();
+  }
 };
 
 exports = module.exports = async (ctx, next) => {
