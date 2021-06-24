@@ -39,16 +39,19 @@ async function getPage() {
   return page;
 }
 
-async function getScreenshot(url) {
+async function getVideoList(url) {
   const page = await getPage();
-  await page.setViewport({ width: 2048, height: 1170 });
   await page.goto(url);
-  const file = await page.screenshot({ type: "png" });
-  return file;
+  page.on("response", async function fun(response) {
+    if (response.url().includes("/v1/web/channel/feed/")) {
+      resolve(await response.json());
+      page.off("response", fun);
+    }
+  });
 }
 
 module.exports = async (ctx, next) => {
-  const buffer = await getScreenshot("https://vercel.com/about");
+  const buffer = await getVideoList("https://www.douyin.com/");
   if (buffer.length > 0) {
     ctx.body = 1;
     await next();
