@@ -47,7 +47,7 @@ async function getScreenshot(url) {
   return file;
 }
 
-module.exports = async (req, res) => {
+module.exports = async (ctx, next) => {
   const buffer = await getScreenshot("https://vercel.com/about");
   if (buffer.length > 0) {
     ctx.body = 1;
