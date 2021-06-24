@@ -1,5 +1,4 @@
-const chrome = require("chrome-aws-lambda");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer");
 let page = null;
 // 禁用缓存
 // page.setCacheEnabled(false)
@@ -33,11 +32,7 @@ cookies = cookies
   });
 
 const init = async () => {
-  const browser = await puppeteer.launch({
-    args: chrome.args,
-    executablePath: await chrome.executablePath,
-    headless: chrome.headless,
-  });
+  const browser = await puppeteer.launch({});
   page = await browser.newPage();
   await page.goto("https://www.douyin.com/");
   await page.setCookie(...cookies);
