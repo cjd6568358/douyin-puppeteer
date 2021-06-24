@@ -5,7 +5,10 @@ const douyinCtr = require("../controllers/douyinCtr");
 const router = new Router({
   prefix: `/${baseApi}`,
 });
-router.get("/douyin", douyinCtr);
+router.get("/douyin", douyinCtr).get("/test", (ctx, next) => {
+  ctx.body = "OK";
+  next();
+});
 
 exports = module.exports = (app) => {
   try {
