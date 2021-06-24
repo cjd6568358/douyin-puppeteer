@@ -57,10 +57,3 @@ module.exports = async (req, res) => {
     await next();
   }
 };
-
-exports = module.exports = async (ctx, next) => {
-  console.log("douyinCtl");
-  let videoList = await getVideoList();
-  ctx.body = videoList;
-  await next();
-};
