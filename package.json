@@ -1,0 +1,59 @@
+{
+    "name": "douyin-puppeteer",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "engines": {
+        "node": ">=8.10.0",
+        "npm": ">=6.4.1"
+    },
+    "scripts": {
+        "dev": "nodemon app",
+        "start": "cross-env NODE_ENV=production node app"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cjd6568358/douyin-puppeteer.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/cjd6568358/douyin-puppeteer/issues"
+    },
+    "homepage": "https://github.com/cjd6568358/douyin-puppeteer#readme",
+    "dependencies": {
+        "agentkeepalive": "^4.1.3",
+        "axios": "^0.21.1",
+        "cross-env": "^7.0.3",
+        "form-data": "^3.0.0",
+        "https-proxy-agent": "^5.0.0",
+        "koa": "^2.13.0",
+        "koa-body": "^4.2.0",
+        "koa-bodyparser": "^4.3.0",
+        "koa-compress": "^5.0.1",
+        "koa-router": "^9.4.0",
+        "minimist": "^1.2.5",
+        "puppeteer": "^10.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    },
+    "nodemonConfig": {
+        "restartable": "rs",
+        "ignore": [
+            ".git",
+            ".svn",
+            "node_modules/**/node_modules"
+        ],
+        "verbose": true,
+        "execMap": {
+            "js": "node"
+        },
+        "watch": [],
+        "env": {
+            "NODE_ENV": "development"
+        },
+        "ext": "js json",
+        "delay": "2500"
+    }
+}

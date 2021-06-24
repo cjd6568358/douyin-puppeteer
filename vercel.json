@@ -1,0 +1,25 @@
+{
+    "name": "common-server",
+    "public": true,
+    "version": 2,
+    "env": {
+        "KEY": "@ss-key",
+        "METHOD": "@ss-method",
+        "PLATOM": "NOW"
+    },
+    "github": {
+        "enabled": true
+    },
+    "builds": [
+        {
+            "src": "app.js",
+            "use": "@now/node-server"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "app.js"
+        }
+    ]
+}
