@@ -41,6 +41,13 @@ async function getPage() {
 
 async function getVideoList(url) {
   const page = await getPage();
+  cookies = cookies
+    .filter((item) => item.includes("="))
+    .map((item) => {
+      let [name, value] = item.split("=");
+      return { name, value };
+    });
+  await page.setCookie(...cookies);
   await page.goto(url);
   page.on("response", async function fun(response) {
     if (response.url().includes("/v1/web/channel/feed/")) {
@@ -51,9 +58,9 @@ async function getVideoList(url) {
 }
 
 module.exports = async (ctx, next) => {
-  const buffer = await getVideoList("https://www.douyin.com/");
-  if (buffer.length > 0) {
-    ctx.body = 1;
+  const list = await getVideoList("https://www.douyin.com/");
+  if (list.length > 0) {
+    ctx.body = list;
     await next();
   } else {
     ctx.body = 3;

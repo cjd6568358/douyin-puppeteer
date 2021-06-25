@@ -1,5 +1,5 @@
 {
-  "name": "common-server",
+  "name": "douyin-puppeteer",
   "public": true,
   "version": 2,
   "env": {
