@@ -42,12 +42,13 @@ async function getPage() {
 
 async function getVideoList(url) {
   const page = await getPage();
-  cookies = cookies.map((item) => {
-    let [name, value] = item.split("=");
-    return { name, value };
-  });
+
   await page.goto(url);
-  await page.setCookie(...cookies);
+  // cookies = cookies.map((item) => {
+  //   let [name, value] = item.split("=");
+  //   return { name, value };
+  // });
+  // await page.setCookie(...cookies);
   return new Promise((resolve) => {
     page.on("response", async function fun(response) {
       if (response.url().includes("/v1/web/channel/feed/")) {
