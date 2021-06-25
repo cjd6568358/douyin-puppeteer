@@ -29,6 +29,7 @@ async function getOptions() {
     // args: chrome.args,
     // executablePath: await chrome.executablePath,
     // headless: chrome.headless,
+    executablePath: '/usr/bin/firefox'
   };
   return options;
 }
