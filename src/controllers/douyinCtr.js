@@ -26,9 +26,11 @@ let cookies = [
 
 async function getOptions() {
   const options = {
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    // args: chrome.args,
     // executablePath: await chrome.executablePath,
+    // headless: chrome.headless,
     headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   };
   return options;
 }
