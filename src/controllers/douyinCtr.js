@@ -1,6 +1,6 @@
-// const puppeteer = require("puppeteer-core");
-// const chrome = require("chrome-aws-lambda");
 const puppeteer = require("puppeteer");
+const chrome = require("chrome-aws-lambda");
+// const puppeteer = require("puppeteer");
 
 let cookies = [
   "ttwid=1%7Cwk9ImDsCBtJgmZ6S2gv3FYCSpjmZ1dsJFMlXLNg-…cc54de4db8dee7ab9b1a81c950ed2afebb22b0847e2c761e1",
@@ -26,12 +26,9 @@ let cookies = [
 
 async function getOptions() {
   const options = {
-    // args: chrome.args,
-    // executablePath: await chrome.executablePath,
-    // headless: chrome.headless,
-    // executablePath: '/usr/bin/firefox'
+    args: chrome.args,
+    executablePath: await chrome.executablePath,
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   };
   return options;
 }
@@ -46,7 +43,6 @@ async function getPage() {
 async function getVideoList(url) {
   const page = await getPage();
   cookies = cookies
-    .filter((item) => item.includes("="))
     .map((item) => {
       let [name, value] = item.split("=");
       return { name, value };
