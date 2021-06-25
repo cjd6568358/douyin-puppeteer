@@ -42,7 +42,7 @@ async function getPage() {
 
 async function getVideoList(url) {
   const page = await getPage();
-
+  page.setDefaultNavigationTimeout(60000);
   await page.goto(url);
   // cookies = cookies.map((item) => {
   //   let [name, value] = item.split("=");
