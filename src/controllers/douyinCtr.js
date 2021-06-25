@@ -30,6 +30,8 @@ async function getOptions() {
     // executablePath: await chrome.executablePath,
     // headless: chrome.headless,
     // executablePath: '/usr/bin/firefox'
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   };
   return options;
 }
