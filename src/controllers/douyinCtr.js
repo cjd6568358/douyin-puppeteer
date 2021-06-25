@@ -1,5 +1,6 @@
-const puppeteer = require("puppeteer-core");
-const chrome = require("chrome-aws-lambda");
+// const puppeteer = require("puppeteer-core");
+// const chrome = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer");
 
 let cookies = [
   "ttwid=1%7Cwk9ImDsCBtJgmZ6S2gv3FYCSpjmZ1dsJFMlXLNg-…cc54de4db8dee7ab9b1a81c950ed2afebb22b0847e2c761e1",
@@ -25,9 +26,9 @@ let cookies = [
 
 async function getOptions() {
   const options = {
-    args: chrome.args,
-    executablePath: await chrome.executablePath,
-    headless: chrome.headless,
+    // args: chrome.args,
+    // executablePath: await chrome.executablePath,
+    // headless: chrome.headless,
   };
   return options;
 }
@@ -47,23 +48,20 @@ async function getVideoList(url) {
       let [name, value] = item.split("=");
       return { name, value };
     });
-  await page.setCookie(...cookies);
   await page.goto(url);
-  page.on("response", async function fun(response) {
-    if (response.url().includes("/v1/web/channel/feed/")) {
-      resolve(await response.json());
-      page.off("response", fun);
-    }
+  await page.setCookie(...cookies);
+  return new Promise((resolve) => {
+    page.on("response", async function fun(response) {
+      if (response.url().includes("/v1/web/channel/feed/")) {
+        resolve(await response.json());
+        page.off("response", fun);
+      }
+    });
   });
 }
 
 module.exports = async (ctx, next) => {
   const list = await getVideoList("https://www.douyin.com/");
-  if (list.length > 0) {
-    ctx.body = list;
-    await next();
-  } else {
-    ctx.body = 3;
-    await next();
-  }
+  ctx.body = list;
+  await next();
 };
