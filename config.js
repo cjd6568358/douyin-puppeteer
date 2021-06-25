@@ -1,5 +1,5 @@
 const { getProcessEnv } = require("./src/util/index");
-const SERVER_PORT = getProcessEnv("PORT") || 3030;
+const SERVER_PORT = getProcessEnv("PORT") || 3040;
 const PLATOM = getProcessEnv("PLATOM");
 const NODE_ENV = getProcessEnv("NODE_ENV") || "development";
 const baseApi = "api";
