@@ -26,7 +26,7 @@ let cookies = [
 
 async function getOptions() {
   const options = {
-    args: chrome.args,
+    args: ['--no-sandbox'],
     executablePath: await chrome.executablePath,
     headless: true,
   };
