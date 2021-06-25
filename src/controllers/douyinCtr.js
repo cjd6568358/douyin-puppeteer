@@ -1,5 +1,5 @@
 // const puppeteer = require("puppeteer-core");
-const chrome = require("chrome-aws-lambda");
+// const chrome = require("chrome-aws-lambda");
 const puppeteer = require("puppeteer");
 
 let cookies = [
@@ -26,8 +26,8 @@ let cookies = [
 
 async function getOptions() {
   const options = {
-    args: ["--no-sandbox"],
-    executablePath: await chrome.executablePath,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    // executablePath: await chrome.executablePath,
     headless: true,
   };
   return options;
