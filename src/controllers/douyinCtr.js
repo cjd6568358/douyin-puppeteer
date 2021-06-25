@@ -26,7 +26,7 @@ let cookies = [
 
 async function getOptions() {
   const options = {
-    args: ['--no-sandbox'],
+    args: ["--no-sandbox"],
     executablePath: await chrome.executablePath,
     headless: true,
   };
@@ -42,11 +42,10 @@ async function getPage() {
 
 async function getVideoList(url) {
   const page = await getPage();
-  cookies = cookies
-    .map((item) => {
-      let [name, value] = item.split("=");
-      return { name, value };
-    });
+  cookies = cookies.map((item) => {
+    let [name, value] = item.split("=");
+    return { name, value };
+  });
   await page.goto(url);
   await page.setCookie(...cookies);
   return new Promise((resolve) => {
