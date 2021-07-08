@@ -29,8 +29,8 @@ async function getOptions() {
     // args: chrome.args,
     // executablePath: await chrome.executablePath,
     // headless: chrome.headless,
-    headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true,
   };
   return options;
 }
