@@ -53,8 +53,8 @@ async function getVideoList(url) {
   await page.setCookie(...new_cookies);
   return new Promise((resolve) => {
     page.on("response", async function fun(response) {
-      if (response.url().includes("/v1/web/channel/feed/")) {
-        resolve(await response.json());
+      if (response.url().includes("www.douyin.com/")) {
+        resolve(await response.text());
         page.off("response", fun);
       }
     });
